@@ -79,8 +79,8 @@ public class Expediente {
     @Column(name = "id_categoria_expediente")
     private Integer id_categoria_expediente;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_persona", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_persona")
     private Persona persona;
 
     @JsonBackReference
@@ -89,8 +89,8 @@ public class Expediente {
     }
 
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_sociedad", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_sociedad")
     private Sociedad sociedad;
 
     @JsonBackReference

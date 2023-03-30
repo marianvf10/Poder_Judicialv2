@@ -74,8 +74,8 @@ public class SedeSocial {
     private Integer id_inscripcion;
 
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_sociedad", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_sociedad")
     private Sociedad sociedad;
     @JsonBackReference
     public Sociedad getSociedad(){

@@ -28,8 +28,8 @@ public class Localidad {
 
 
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_provincia", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_provincia")
     private Provincia provincia;
 
     public Localidad() {
