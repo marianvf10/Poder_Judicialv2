@@ -1,8 +1,11 @@
 package com.rpcwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name ="localidades")
@@ -23,13 +26,22 @@ public class Localidad {
     @Column(name = "nombre")
     private String nombre;
 
-    @Getter
-    @Setter
-    @Column(name = "id_provincia")
-    private Integer id_provincia;
 
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_provincia", nullable = false)
+    private Provincia provincia;
 
     public Localidad() {
     }
+    @JsonBackReference
+    public Provincia getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(Provincia provincia){
+        this.provincia = provincia;
+    }
+
 
 }

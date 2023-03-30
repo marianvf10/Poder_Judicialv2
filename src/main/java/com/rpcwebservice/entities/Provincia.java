@@ -1,8 +1,12 @@
 package com.rpcwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "provincias")
@@ -28,6 +32,13 @@ public class Provincia {
     @Column(name="id_pais")
     private Integer id_pais;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "provincia")
+    private Set<Localidad> listaLocalidades = new HashSet<>();
+
     public Provincia() {
+    }
+    @JsonManagedReference
+    public Set<Localidad> getListaLocalidades() {
+        return listaLocalidades;
     }
 }
