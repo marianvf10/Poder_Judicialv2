@@ -1,11 +1,14 @@
 package com.rpcwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="personas_juridicas")
@@ -27,9 +30,10 @@ public class PersonaJuridica {
     @Column(name = "id_tipo_sociedad")
     private Integer id_tipo_sociedad;
 
+
     @Getter
     @Setter
-    @Column(name = "juridisccion")
+    @Column(name = "jurisdiccion")
     private String jurisdiccion;
 
     @Getter
@@ -117,4 +121,12 @@ public class PersonaJuridica {
     @Setter
     @Column(name="delete_user")
     private String delete_user;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "personaJuridica")
+    private Set<Socio> listaSocios = new HashSet<>();
+
+    @JsonManagedReference
+    public Set<Socio> getListaSocios() {
+        return listaSocios;
+    }
 }

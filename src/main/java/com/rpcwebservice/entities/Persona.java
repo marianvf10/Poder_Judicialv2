@@ -1,11 +1,15 @@
 package com.rpcwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.Date;
+import java.sql.Date;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="personas")
@@ -56,7 +60,6 @@ public class Persona {
     @Column(name = "medida_cautelar", columnDefinition = "BOOLEAN")
     private Boolean medida_cautelar;
 
-    @Getter
     @Setter
     @Column(name="telefono")
     private String telefono;
@@ -75,17 +78,11 @@ public class Persona {
     @Column(name = "valid", columnDefinition = "BOOLEAN")
     private Boolean valid;
 
-    @Getter
     @Setter
     @CreationTimestamp
-    @Column(name = "created_at")
+    @Getter
+    @Column(name = "created_at",nullable = false)
     private Date created_at;
-
-    @Getter
-    @Setter
-    @CreationTimestamp
-    @Column(name = "updated_at")
-    private Date updated_at;
 
     @Getter
     @Setter
@@ -93,17 +90,30 @@ public class Persona {
     @Column(name = "deleted_at")
     private Date deleted_at;
 
-    @Getter
-    @Setter
-    @Column(name="create_user")
-    private String create_user;
+     /*
     @Getter
     @Setter
     @Column(name="update_user")
     private String update_user;
+    */
+    //Tengo comentada esta linea porque me tira un error
+
+    @Getter
+    @Setter
+    @Column(name="create_user")
+    private String create_user;
+
     @Getter
     @Setter
     @Column(name="delete_user")
     private String delete_user;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "persona")
+    private Set<Socio> listaSocios = new HashSet<>();
+
+    @JsonManagedReference
+    public Set<Socio> getListaSocios() {
+        return listaSocios;
+    }
 
 }

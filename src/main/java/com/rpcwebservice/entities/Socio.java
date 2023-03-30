@@ -1,5 +1,6 @@
 package com.rpcwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,26 +47,6 @@ public class Socio {
     @Setter
     @Column(name = "edad")
     private Integer edad ;
-
-    @Getter
-    @Setter
-    @Column(name = "id_sociedad")
-    private Integer id_sociedad ;
-
-    @Getter
-    @Setter
-    @Column(name = "id_persona")
-    private Integer id_persona;
-
-    @Getter
-    @Setter
-    @Column(name = "id_tipo_participacion")
-    private Integer id_tipo_participacion;
-
-    @Getter
-    @Setter
-    @Column(name = "id_persona_juridica")
-    private Integer id_persona_juridica;
 
     @Getter
     @Setter
@@ -128,4 +109,43 @@ public class Socio {
     @Setter
     @Column(name="delete_user")
     private String delete_user;
+
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_persona", nullable = false)
+    private Persona persona;
+
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_persona_juridica", nullable = false)
+    private PersonaJuridica personaJuridica;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_sociedad", nullable = false)
+    private Sociedad sociedad ;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_tipo_participacion", nullable = false)
+    private TipoParticipacion tipoParticipacion;
+
+    @JsonBackReference
+    public Persona getPersona() {
+        return persona;
+    }
+    @JsonBackReference
+    public PersonaJuridica getPersonaJuridica(){
+        return personaJuridica;
+    }
+
+    @JsonBackReference
+    public Sociedad getSociedad(){
+        return sociedad;
+    }
+    @JsonBackReference
+    public TipoParticipacion getTipoParticipacion(){
+        return tipoParticipacion;
+    }
+
+
+
 }

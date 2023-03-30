@@ -1,11 +1,14 @@
 package com.rpcwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="tipo_participacion")
@@ -32,5 +35,13 @@ public class TipoParticipacion {
     @CreationTimestamp
     @Column(name = "updated_at")
     private Date updated_at;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tipoParticipacion")
+    private Set<Socio> listaSocios = new HashSet<>();
+
+    @JsonManagedReference
+    public Set<Socio> getListaSocios() {
+        return listaSocios;
+    }
 
 }

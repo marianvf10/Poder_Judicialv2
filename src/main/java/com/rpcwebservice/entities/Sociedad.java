@@ -1,5 +1,6 @@
 package com.rpcwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.rpcwebservice.utils.Instrumento;
 import com.rpcwebservice.utils.Instrumento;
 import jakarta.persistence.*;
@@ -8,6 +9,8 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "sociedades")
@@ -183,6 +186,14 @@ public class Sociedad {
     @Setter
     @Column(name="beneficiarios",columnDefinition = "TEXT")
     private String beneficiarios;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
+    private Set<Socio> listaSocios = new HashSet<>();
+
+    @JsonManagedReference
+    public Set<Socio> getListaSocios() {
+        return listaSocios;
+    }
 
 
 
