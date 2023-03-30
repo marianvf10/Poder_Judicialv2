@@ -26,12 +26,6 @@ public class Sociedad {
     @Column(name="denominacion")
     private String denominacion;
 
-
-    @Getter
-    @Setter
-    @Column(name = "id_tipo_sociedad")
-    private Integer id_tipo_sociedad;
-
     @Getter
     @Setter
     @Column(name="cuit")
@@ -66,8 +60,6 @@ public class Sociedad {
     @Setter
     @Column(name="valor_cuota")
     private Long valor_cuota;
-
-
 
     @Getter
     @Setter
@@ -170,8 +162,6 @@ public class Sociedad {
     @Column(name="otros_instrumentos",columnDefinition = "TEXT")
     private String otros_instrumentos;
 
-
-
     @Getter
     @Setter
     @Column(name="dia_cierre_ejercicio")
@@ -212,6 +202,10 @@ public class Sociedad {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
     private Set<Expediente> listaExpedientes = new HashSet<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_tipo_sociedad")
+    private TipoSociedad tipoSociedad;
+
     @JsonManagedReference
     public Set<PersonaJuridica> getListaPersonasJuridicas() {
         return listaPersonasJuridicas;
@@ -225,6 +219,10 @@ public class Sociedad {
     @JsonManagedReference
     public Set<Expediente> getListaExpedientes() {
         return listaExpedientes;
+    }
+
+    public TipoSociedad getTipoSociedad(){
+        return tipoSociedad;
     }
 
 

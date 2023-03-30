@@ -36,4 +36,7 @@ public class TipoSociedad {
     public Set<PersonaJuridica> getListaPersonasJuridicas() {
         return listaPersonasJuridicas;
     }
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tipoSociedad")
+    private Set<Sociedad> listaSociedades = new HashSet<>();
 }
