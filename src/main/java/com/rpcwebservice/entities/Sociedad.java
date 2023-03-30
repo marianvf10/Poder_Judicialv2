@@ -190,9 +190,41 @@ public class Sociedad {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
     private Set<Socio> listaSocios = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
+    private Set<Rubrica> listaRubricas = new HashSet<>();
+
     @JsonManagedReference
     public Set<Socio> getListaSocios() {
         return listaSocios;
+    }
+
+    @JsonManagedReference
+    public Set<Rubrica> getListaRubricas() {
+        return listaRubricas;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
+    private Set<PersonaJuridica> listaPersonasJuridicas = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
+    private Set<SedeSocial> listaSedesSociales = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
+    private Set<Expediente> listaExpedientes = new HashSet<>();
+
+    @JsonManagedReference
+    public Set<PersonaJuridica> getListaPersonasJuridicas() {
+        return listaPersonasJuridicas;
+    }
+
+    @JsonManagedReference
+    public Set<SedeSocial> getListaSedesSociales() {
+        return listaSedesSociales;
+    }
+
+    @JsonManagedReference
+    public Set<Expediente> getListaExpedientes() {
+        return listaExpedientes;
     }
 
 

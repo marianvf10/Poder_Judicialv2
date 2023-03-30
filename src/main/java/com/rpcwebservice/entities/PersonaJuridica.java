@@ -1,5 +1,6 @@
 package com.rpcwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -23,13 +24,6 @@ public class PersonaJuridica {
     @Setter
     @Column(name = "denominacion", columnDefinition = "TEXT")
     private String denominacion;
-
-
-    @Getter
-    @Setter
-    @Column(name = "id_tipo_sociedad")
-    private Integer id_tipo_sociedad;
-
 
     @Getter
     @Setter
@@ -88,11 +82,6 @@ public class PersonaJuridica {
 
     @Getter
     @Setter
-    @Column(name = "id_sociedad")
-    private Integer id_sociedad;
-
-    @Getter
-    @Setter
     @CreationTimestamp
     @Column(name = "created_at")
     private Date created_at;
@@ -124,9 +113,25 @@ public class PersonaJuridica {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "personaJuridica")
     private Set<Socio> listaSocios = new HashSet<>();
-
     @JsonManagedReference
     public Set<Socio> getListaSocios() {
         return listaSocios;
+    }
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_sociedad")
+    private Sociedad sociedad;
+    @JsonBackReference
+    public Sociedad getSociedad(){
+        return sociedad;
+    }
+
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_tipo_sociedad")
+    private TipoSociedad tipoSociedad;
+    @JsonBackReference
+    public TipoSociedad getTipoSociedad(){
+        return tipoSociedad;
     }
 }

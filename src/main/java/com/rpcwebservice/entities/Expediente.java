@@ -76,11 +76,6 @@ public class Expediente {
 
     @Getter
     @Setter
-    @Column(name = "id_sociedad")
-    private Integer id_sociedad;
-
-    @Getter
-    @Setter
     @Column(name = "id_categoria_expediente")
     private Integer id_categoria_expediente;
 
@@ -91,5 +86,15 @@ public class Expediente {
     @JsonBackReference
     public Persona getPersona(){
         return persona;
+    }
+
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_sociedad", nullable = false)
+    private Sociedad sociedad;
+
+    @JsonBackReference
+    public Sociedad getSociedad(){
+        return sociedad;
     }
 }

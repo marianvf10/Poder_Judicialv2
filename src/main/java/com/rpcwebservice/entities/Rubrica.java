@@ -1,5 +1,6 @@
 package com.rpcwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -133,11 +134,6 @@ public class Rubrica {
 
     @Getter
     @Setter
-    @Column(name="id_sociedad")
-    private Integer id_sociedad;
-
-    @Getter
-    @Setter
     @Column(name="id_libro_comercio")
     private Integer id_libro_comercio;
 
@@ -172,7 +168,14 @@ public class Rubrica {
     @Column(name="delete_user")
     private String delete_user;
 
-
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_sociedad", nullable = false)
+    private Sociedad sociedad;
+    @JsonBackReference
+    public Sociedad getSociedad(){
+        return sociedad;
+    }
 
 
 

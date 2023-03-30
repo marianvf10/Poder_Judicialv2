@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "sede_social")
 public class TipoSociedad {
@@ -27,5 +30,10 @@ public class TipoSociedad {
     @Column(name="tipo")
     private String tipo;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tipoSociedad")
+    private Set<PersonaJuridica> listaPersonasJuridicas = new HashSet<>();
 
+    public Set<PersonaJuridica> getListaPersonasJuridicas() {
+        return listaPersonasJuridicas;
+    }
 }
