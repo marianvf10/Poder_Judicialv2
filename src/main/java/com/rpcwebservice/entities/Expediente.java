@@ -1,5 +1,6 @@
 package com.rpcwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -83,8 +84,12 @@ public class Expediente {
     @Column(name = "id_categoria_expediente")
     private Integer id_categoria_expediente;
 
-    @Getter
-    @Setter
-    @Column(name = "id_persona")
-    private Integer id_persona;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_persona", nullable = false)
+    private Persona persona;
+
+    @JsonBackReference
+    public Persona getPersona(){
+        return persona;
+    }
 }

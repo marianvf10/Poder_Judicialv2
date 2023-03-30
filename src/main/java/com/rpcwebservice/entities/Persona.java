@@ -22,37 +22,37 @@ public class Persona {
 
     @Getter
     @Setter
-    @Column(name="nombre")
+    @Column(name = "nombre")
     private String nombre;
 
     @Getter
     @Setter
-    @Column(name="apellido")
+    @Column(name = "apellido")
     private String apellido;
 
     @Getter
     @Setter
-    @Column(name="tipo_documento")
+    @Column(name = "tipo_documento")
     private String tipo_documento;
 
     @Getter
     @Setter
-    @Column(name="numero_documento")
+    @Column(name = "numero_documento")
     private String numero_documento;
 
     @Getter
     @Setter
-    @Column(name="profesion")
+    @Column(name = "profesion")
     private String profesion;
 
     @Getter
     @Setter
-    @Column(name="fecha_nacimiento")
+    @Column(name = "fecha_nacimiento")
     private Date fecha_nacimiento;
 
     @Getter
     @Setter
-    @Column(name="nacionalidad")
+    @Column(name = "nacionalidad")
     private String nacionalidad;
 
     @Getter
@@ -61,16 +61,16 @@ public class Persona {
     private Boolean medida_cautelar;
 
     @Setter
-    @Column(name="telefono")
+    @Column(name = "telefono")
     private String telefono;
 
     @Getter
     @Setter
-    @Column(name="sexo")
+    @Column(name = "sexo")
     private String sexo;
     @Getter
     @Setter
-    @Column(name="cuil")
+    @Column(name = "cuil")
     private String cuil;
 
     @Getter
@@ -81,7 +81,7 @@ public class Persona {
     @Setter
     @CreationTimestamp
     @Getter
-    @Column(name = "created_at",nullable = false)
+    @Column(name = "created_at", nullable = false)
     private Date created_at;
 
     @Getter
@@ -100,20 +100,27 @@ public class Persona {
 
     @Getter
     @Setter
-    @Column(name="create_user")
+    @Column(name = "create_user")
     private String create_user;
 
     @Getter
     @Setter
-    @Column(name="delete_user")
+    @Column(name = "delete_user")
     private String delete_user;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "persona")
     private Set<Socio> listaSocios = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "persona")
+    private Set<Expediente> expedientes = new HashSet<>();
 
     @JsonManagedReference
     public Set<Socio> getListaSocios() {
         return listaSocios;
     }
 
+    public Set<Expediente> getExpedientes() {
+        return expedientes;
+
+    }
 }
