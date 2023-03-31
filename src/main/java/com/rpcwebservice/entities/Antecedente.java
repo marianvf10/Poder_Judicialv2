@@ -44,11 +44,6 @@ public class Antecedente {
 
     @Getter
     @Setter
-    @Column(name = "id_tipo_antecedente")
-    private Integer id_tipo_antecedente;
-
-    @Getter
-    @Setter
     @Column(name = "id_sociedad")
     private Integer id_sociedad;
 
@@ -110,9 +105,9 @@ public class Antecedente {
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tipo_antecedente")
-    private Inscripcion tipoAntecedente;
+    private TipoAntecedente tipoAntecedente;
     @JsonBackReference
-    public Inscripcion getTipoAntecedente() {
+    public TipoAntecedente getTipoAntecedente() {
         return tipoAntecedente;
     }
 }
