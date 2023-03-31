@@ -1,11 +1,15 @@
 package com.rpcwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="inscripciones")
@@ -67,14 +71,33 @@ public class Inscripcion {
 
     @Getter
     @Setter
-    @Column(name = "id_expediente")
-    private Integer id_expediente;
-
-    @Getter
-    @Setter
     @Column(name = "id_tipo_tomo")
     private Integer id_tipo_tomo;
 
-    public Inscripcion() {
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "inscripcion")
+    private Set<Antecedente> listaAntecedentes = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "inscripcion")
+    private Set<SedeSocial> listaSedesSociales = new HashSet<>();
+
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_expediente")
+    private Expediente expediente;
+    @JsonManagedReference
+    public Set<Antecedente> getListaAntecedentes() {
+        return listaAntecedentes;
     }
+
+    @JsonManagedReference
+    public Set<SedeSocial> getListaSedesSociales() {
+        return listaSedesSociales;
+    }
+
+    @JsonBackReference
+    public Expediente getExpediente(){
+        return expediente;
+    }
+
+
 }

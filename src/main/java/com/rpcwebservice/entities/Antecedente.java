@@ -1,5 +1,6 @@
 package com.rpcwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -53,11 +54,6 @@ public class Antecedente {
 
     @Getter
     @Setter
-    @Column(name = "id_inscripcion")
-    private Integer id_inscripcion;
-
-    @Getter
-    @Setter
     @Column(name="usuario")
     private String usuario;
 
@@ -100,4 +96,23 @@ public class Antecedente {
     @Setter
     @Column(name="delete_user")
     private String delete_user;
+
+
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_inscripcion")
+    private Inscripcion inscripcion;
+    @JsonBackReference
+    public Inscripcion getInscripcion() {
+        return inscripcion;
+    }
+
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_tipo_antecedente")
+    private Inscripcion tipoAntecedente;
+    @JsonBackReference
+    public Inscripcion getTipoAntecedente() {
+        return tipoAntecedente;
+    }
 }
