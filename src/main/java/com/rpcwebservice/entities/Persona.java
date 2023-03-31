@@ -90,13 +90,21 @@ public class Persona {
     @Column(name = "deleted_at")
     private Date deleted_at;
 
-     /*
+    /*
+    @Getter
+    @Setter
+    @CreationTimestamp
+    @Column(name = "updated_at")
+    private Date updated_at;
+    */
+
+
+
     @Getter
     @Setter
     @Column(name="update_user")
     private String update_user;
-    */
-    //Tengo comentada esta linea porque me tira un error
+
 
     @Getter
     @Setter
