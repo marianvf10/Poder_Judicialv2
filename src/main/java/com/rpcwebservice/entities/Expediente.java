@@ -1,12 +1,15 @@
 package com.rpcwebservice.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="expedientes")
@@ -96,5 +99,13 @@ public class Expediente {
     @JsonBackReference
     public Sociedad getSociedad(){
         return sociedad;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "expediente")
+    private Set<Inscripcion> listaInscripciones = new HashSet<>();
+
+    @JsonManagedReference
+    public Set<Inscripcion> getListaInscripciones() {
+        return listaInscripciones;
     }
 }

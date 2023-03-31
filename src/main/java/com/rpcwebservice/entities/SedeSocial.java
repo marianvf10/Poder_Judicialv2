@@ -68,11 +68,6 @@ public class SedeSocial {
     @Column(name = "deleted_at")
     private Date deleted_at;
 
-    @Getter
-    @Setter
-    @Column(name = "id_inscripcion")
-    private Integer id_inscripcion;
-
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_sociedad")
@@ -80,6 +75,16 @@ public class SedeSocial {
     @JsonBackReference
     public Sociedad getSociedad(){
         return sociedad;
+    }
+
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_inscripcion")
+    private Inscripcion inscripcion;
+
+    @JsonBackReference
+    public Inscripcion getInscripcion(){
+        return inscripcion;
     }
 
 
