@@ -1,16 +1,15 @@
 package com.rpcwebservice.repositories;
 
+import com.rpcwebservice.dtos.RubricaDTO;
 import com.rpcwebservice.entities.Rubrica;
-import com.rpcwebservice.dtos.RubricasDTO;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface RubricaRepository extends JpaRepository<Rubrica,Integer> {
+public interface RubricaRepository extends CrudRepository<Rubrica,Integer> {
 
-    @Query(name="buscarRubricaConSociedad", nativeQuery = true)
-    List<RubricasDTO> buscarRubricasConSociedades(@Param("idSociedad") Integer idSociedad);
+    List<RubricaDTO> findBySociedadId(Integer id);
 
 }

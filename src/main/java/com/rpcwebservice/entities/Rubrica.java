@@ -1,7 +1,6 @@
 package com.rpcwebservice.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.rpcwebservice.dtos.RubricasDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,29 +10,6 @@ import java.util.Date;
 
 @Entity
 @Table(name="rubricas")
-@NamedNativeQuery(
-        name = "buscarRubricaConSociedad",
-        query =
-                "SELECT DISTINCT r.id_sociedad,r.apertura as Fecha_Apertura, r.denominacion as Ru_Denominacion, r.numero_apertura, " +
-                        "r.numero_clausura " +
-                        "FROM " +
-                        "sociedades s LEFT JOIN rubricas r ON s.id = r.id_sociedad " +
-                        "WHERE r.id_sociedad = :idSociedad",
-        resultSetMapping = "buscarRubricaConSociedad"
-)
-@SqlResultSetMapping(
-        name = "buscarRubricaConSociedad",
-        classes = @ConstructorResult(
-                targetClass = RubricasDTO.class,
-                columns = {
-                        @ColumnResult(name = "id_sociedad", type = Integer.class),
-                        @ColumnResult(name = "Fecha_Apertura", type = String.class),
-                        @ColumnResult(name = "Ru_denominacion", type = String.class),
-                        @ColumnResult(name = "numero_apertura", type = String.class),
-                        @ColumnResult(name = "numero_clausura", type = String.class)
-                }
-        )
-)
 public class Rubrica {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
