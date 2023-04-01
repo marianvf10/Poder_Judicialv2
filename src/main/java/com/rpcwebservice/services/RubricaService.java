@@ -1,7 +1,7 @@
 package com.rpcwebservice.services;
 
+import com.rpcwebservice.dtos.RubricaDTO;
 import com.rpcwebservice.repositories.RubricaRepository;
-import com.rpcwebservice.dtos.RubricasDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
@@ -16,8 +16,7 @@ public class RubricaService {
     RubricaRepository rubricaRepository;
 
     @Transactional
-    public List<RubricasDTO> obtenerRubricasConSociedades(@Param("idSociedad") Integer idSociedad){
-        return rubricaRepository.buscarRubricasConSociedades(idSociedad);
+    public List<RubricaDTO> getSociedadRubricasById(Integer id){
+        return rubricaRepository.findBySociedadId(id);
     }
-
 }
