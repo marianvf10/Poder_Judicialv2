@@ -44,11 +44,6 @@ public class Antecedente {
 
     @Getter
     @Setter
-    @Column(name = "id_sociedad")
-    private Integer id_sociedad;
-
-    @Getter
-    @Setter
     @Column(name="usuario")
     private String usuario;
 
@@ -91,6 +86,16 @@ public class Antecedente {
     @Setter
     @Column(name="delete_user")
     private String delete_user;
+
+
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_sociedad")
+    private Sociedad sociedad;
+    @JsonBackReference
+    public Sociedad getSociedad() {
+        return sociedad;
+    }
 
 
     @Setter
