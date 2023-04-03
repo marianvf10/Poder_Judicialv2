@@ -1,11 +1,15 @@
 package com.rpcwebservice.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name ="localidades")
@@ -32,6 +36,9 @@ public class Localidad {
     @JoinColumn(name = "id_provincia")
     private Provincia provincia;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "localidad")
+    private Set<SedeSocial> listaSedesSociales = new HashSet<>();
+
     public Localidad() {
     }
     @JsonBackReference
@@ -41,6 +48,11 @@ public class Localidad {
 
     public void setProvincia(Provincia provincia){
         this.provincia = provincia;
+    }
+
+    @JsonManagedReference
+    public Set<SedeSocial> getSedesSociales(){
+        return listaSedesSociales;
     }
 
 
