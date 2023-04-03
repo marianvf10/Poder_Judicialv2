@@ -1,5 +1,6 @@
 package com.rpcwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.rpcwebservice.utils.Instrumento;
 import com.rpcwebservice.utils.Instrumento;
@@ -183,15 +184,8 @@ public class Sociedad {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
     private Set<Rubrica> listaRubricas = new HashSet<>();
 
-    @JsonManagedReference
-    public Set<Socio> getListaSocios() {
-        return listaSocios;
-    }
-
-    @JsonManagedReference
-    public Set<Rubrica> getListaRubricas() {
-        return listaRubricas;
-    }
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
+    private Set<Antecedente> listaAntecedentes = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
     private Set<PersonaJuridica> listaPersonasJuridicas = new HashSet<>();
@@ -205,6 +199,16 @@ public class Sociedad {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tipo_sociedad")
     private TipoSociedad tipoSociedad;
+
+    @JsonManagedReference
+    public Set<Socio> getListaSocios() {
+        return listaSocios;
+    }
+
+    @JsonManagedReference
+    public Set<Rubrica> getListaRubricas() {
+        return listaRubricas;
+    }
 
     @JsonManagedReference
     public Set<PersonaJuridica> getListaPersonasJuridicas() {
@@ -221,6 +225,12 @@ public class Sociedad {
         return listaExpedientes;
     }
 
+    @JsonManagedReference
+    public Set<Antecedente> getListaAntecedentes() {
+        return listaAntecedentes;
+    }
+
+    @JsonBackReference
     public TipoSociedad getTipoSociedad(){
         return tipoSociedad;
     }
