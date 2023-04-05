@@ -85,7 +85,6 @@ public class Expediente {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_persona")
     private Persona persona;
-
     @JsonBackReference
     public Persona getPersona(){
         return persona;
@@ -103,7 +102,6 @@ public class Expediente {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "expediente")
     private Set<Inscripcion> listaInscripciones = new HashSet<>();
-
     @JsonManagedReference
     public Set<Inscripcion> getListaInscripciones() {
         return listaInscripciones;
