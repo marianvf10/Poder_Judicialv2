@@ -114,33 +114,31 @@ public class Socio {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_persona")
     private Persona persona;
+    @JsonBackReference
+    public Persona getPersona() {
+        return persona;
+    }
 
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_persona_juridica")
     private PersonaJuridica personaJuridica;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_sociedad")
-    private Sociedad sociedad ;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_tipo_participacion")
-    private TipoParticipacion tipoParticipacion;
-
-    @JsonBackReference
-    public Persona getPersona() {
-        return persona;
-    }
     @JsonBackReference
     public PersonaJuridica getPersonaJuridica(){
         return personaJuridica;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_sociedad")
+    private Sociedad sociedad;
     @JsonBackReference
     public Sociedad getSociedad(){
         return sociedad;
     }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_tipo_participacion")
+    private TipoParticipacion tipoParticipacion;
     @JsonBackReference
     public TipoParticipacion getTipoParticipacion(){
         return tipoParticipacion;

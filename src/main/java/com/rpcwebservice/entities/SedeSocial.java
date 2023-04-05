@@ -76,25 +76,21 @@ public class SedeSocial {
     public Sociedad getSociedad(){
         return sociedad;
     }
-
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_inscripcion")
     private Inscripcion inscripcion;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_localidad")
-    private Localidad localidad;
-
     @JsonBackReference
     public Inscripcion getInscripcion(){
         return inscripcion;
     }
-
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_localidad")
+    private Localidad localidad;
+    @JsonBackReference
     public Localidad getLocalidad() {
         return localidad;
     }
 
-    public SedeSocial() {
-    }
 }

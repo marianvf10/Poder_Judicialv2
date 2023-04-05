@@ -76,24 +76,21 @@ public class Inscripcion {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "inscripcion")
     private Set<Antecedente> listaAntecedentes = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "inscripcion")
-    private Set<SedeSocial> listaSedesSociales = new HashSet<>();
-
-    @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_expediente")
-    private Expediente expediente;
     @JsonManagedReference
     public Set<Antecedente> getListaAntecedentes() {
         return listaAntecedentes;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "inscripcion")
+    private Set<SedeSocial> listaSedesSociales = new HashSet<>();
     @JsonManagedReference
     public Set<SedeSocial> getListaSedesSociales() {
         return listaSedesSociales;
     }
-
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_expediente")
+    private Expediente expediente;
     @JsonBackReference
     public Expediente getExpediente(){
         return expediente;

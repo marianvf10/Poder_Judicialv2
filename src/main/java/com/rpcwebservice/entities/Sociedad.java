@@ -3,7 +3,6 @@ package com.rpcwebservice.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.rpcwebservice.utils.Instrumento;
-import com.rpcwebservice.utils.Instrumento;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -61,6 +60,16 @@ public class Sociedad {
     @Setter
     @Column(name="valor_cuota")
     private Long valor_cuota;
+
+    @Getter
+    @Setter
+    @Column(name="fecha_cierre")
+    private Date fecha_cierre;
+
+    @Getter
+    @Setter
+    @Column(name="fecha_instrumento")
+    private Date fecha_instrumento;
 
     @Getter
     @Setter
@@ -178,62 +187,68 @@ public class Sociedad {
     @Column(name="beneficiarios",columnDefinition = "TEXT")
     private String beneficiarios;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
-    private Set<Socio> listaSocios = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
-    private Set<Rubrica> listaRubricas = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
-    private Set<Antecedente> listaAntecedentes = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
-    private Set<PersonaJuridica> listaPersonasJuridicas = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
-    private Set<SedeSocial> listaSedesSociales = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
-    private Set<Expediente> listaExpedientes = new HashSet<>();
-
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tipo_sociedad")
     private TipoSociedad tipoSociedad;
+    @JsonBackReference
+    public TipoSociedad getTipoSociedad(){
+        return tipoSociedad;
+    }
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
+    private Set<Socio> listaSocios = new HashSet<>();
     @JsonManagedReference
     public Set<Socio> getListaSocios() {
         return listaSocios;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
+    private Set<Rubrica> listaRubricas = new HashSet<>();
     @JsonManagedReference
     public Set<Rubrica> getListaRubricas() {
         return listaRubricas;
     }
 
-    @JsonManagedReference
-    public Set<PersonaJuridica> getListaPersonasJuridicas() {
-        return listaPersonasJuridicas;
-    }
-
-    @JsonManagedReference
-    public Set<SedeSocial> getListaSedesSociales() {
-        return listaSedesSociales;
-    }
-
-    @JsonManagedReference
-    public Set<Expediente> getListaExpedientes() {
-        return listaExpedientes;
-    }
-
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
+    private Set<Antecedente> listaAntecedentes = new HashSet<>();
     @JsonManagedReference
     public Set<Antecedente> getListaAntecedentes() {
         return listaAntecedentes;
     }
 
-    @JsonBackReference
-    public TipoSociedad getTipoSociedad(){
-        return tipoSociedad;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
+    private Set<PersonaJuridica> listaPersonasJuridicas = new HashSet<>();
+    @JsonManagedReference
+    public Set<PersonaJuridica> getListaPersonasJuridicas() {
+        return listaPersonasJuridicas;
     }
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
+    private Set<SedeSocial> listaSedesSociales = new HashSet<>();
+    @JsonManagedReference
+    public Set<SedeSocial> getListaSedesSociales() {
+        return listaSedesSociales;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "sociedad")
+    private Set<Expediente> listaExpedientes = new HashSet<>();
+    @JsonManagedReference
+    public Set<Expediente> getListaExpedientes() {
+        return listaExpedientes;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

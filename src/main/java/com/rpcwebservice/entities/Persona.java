@@ -118,17 +118,15 @@ public class Persona {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "persona")
     private Set<Socio> listaSocios = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "persona")
-    private Set<Expediente> expedientes = new HashSet<>();
-
     @JsonManagedReference
     public Set<Socio> getListaSocios() {
         return listaSocios;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "persona")
+    private Set<Expediente> expedientes = new HashSet<>();
+    @JsonManagedReference
     public Set<Expediente> getExpedientes() {
         return expedientes;
-
     }
 }

@@ -38,7 +38,6 @@ public class TipoParticipacion {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tipoParticipacion")
     private Set<Socio> listaSocios = new HashSet<>();
-
     @JsonManagedReference
     public Set<Socio> getListaSocios() {
         return listaSocios;

@@ -35,21 +35,13 @@ public class Localidad {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_provincia")
     private Provincia provincia;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "localidad")
-    private Set<SedeSocial> listaSedesSociales = new HashSet<>();
-
-    public Localidad() {
-    }
     @JsonBackReference
     public Provincia getProvincia() {
         return provincia;
     }
 
-    public void setProvincia(Provincia provincia){
-        this.provincia = provincia;
-    }
-
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "localidad")
+    private Set<SedeSocial> listaSedesSociales = new HashSet<>();
     @JsonManagedReference
     public Set<SedeSocial> getSedesSociales(){
         return listaSedesSociales;

@@ -1,8 +1,10 @@
 package com.rpcwebservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,29 +16,37 @@ public class TipoSociedad {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     @Getter
-
     private Integer id;
 
-    @Getter
+
     @Setter
+    @Getter
     @Column(name="nombre")
     private String nombre;
-    @Getter
+
     @Setter
+    @Getter
     @Column(name="siglas")
     private String siglas;
-    @Getter
+
     @Setter
+    @Getter
     @Column(name="tipo")
     private String tipo;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tipoSociedad")
     private Set<PersonaJuridica> listaPersonasJuridicas = new HashSet<>();
 
+    @JsonManagedReference
     public Set<PersonaJuridica> getListaPersonasJuridicas() {
         return listaPersonasJuridicas;
     }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tipoSociedad")
     private Set<Sociedad> listaSociedades = new HashSet<>();
+    @JsonManagedReference
+    public Set<Sociedad> getListaSociedades() {
+        return listaSociedades;
+    }
+
 }
