@@ -25,7 +25,7 @@ public class Antecedente {
     @Setter
     @Getter
     @Column(name="fecha")
-    private String fecha;
+    private Date fecha;
 
 
     @Getter
