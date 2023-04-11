@@ -1,6 +1,7 @@
 package com.rpcwebservice.controllers;
 
 import com.rpcwebservice.dtos.RubricaDTO;
+import com.rpcwebservice.dtos.RubricasDT;
 import com.rpcwebservice.entities.Rubrica;
 import com.rpcwebservice.services.RubricaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,7 +40,7 @@ public class RubricaController {
         List<RubricaDTO> rubricasDTOS = rubricaService.getSociedadRubricasById(id);
 
         if (rubricasDTOS.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(rubricasDTOS, HttpStatus.OK);
