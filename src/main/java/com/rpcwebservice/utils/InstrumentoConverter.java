@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 @Converter(autoApply = true)
 public class InstrumentoConverter implements AttributeConverter<Instrumento, String> {
+    /*Esta clase se utiliza para mapear un string a un atributo especifico de una entidad*/
     @Override
     public String convertToDatabaseColumn(Instrumento instrumento) {
         if (instrumento == null) {
