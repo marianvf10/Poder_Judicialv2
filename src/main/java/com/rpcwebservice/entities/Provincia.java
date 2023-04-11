@@ -34,9 +34,6 @@ public class Provincia {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "provincia")
     private Set<Localidad> listaLocalidades = new HashSet<>();
-
-    public Provincia() {
-    }
     @JsonManagedReference
     public Set<Localidad> getListaLocalidades() {
         return listaLocalidades;
