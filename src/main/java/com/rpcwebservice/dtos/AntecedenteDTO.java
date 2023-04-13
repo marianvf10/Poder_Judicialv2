@@ -14,7 +14,4 @@ public interface AntecedenteDTO {
 
     @Value("#{target.inscripcion.numero + '/' + target.inscripcion.tomo_anio}")
     String getInscripcion();
-
-    @Value("#{target.sociedad.id}")
-    String getIdSociedad();
 }
