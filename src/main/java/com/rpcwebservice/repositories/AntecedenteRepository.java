@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface AntecedenteRepository extends JpaRepository<Antecedente,Integer> {
 
-    List<AntecedenteDTO> findBySociedadId(Integer id);
+    List<AntecedenteDTO> findBySociedadCuitOrderByFecha(String cuit);
 
 }
