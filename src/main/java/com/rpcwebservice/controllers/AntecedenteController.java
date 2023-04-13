@@ -1,7 +1,8 @@
 package com.rpcwebservice.controllers;
 
 import com.rpcwebservice.dtos.AntecedenteDTO;
-import com.rpcwebservice.services.AntecedenteService;
+import com.rpcwebservice.exceptions.ResourceNotFoundException;
+import com.rpcwebservice.services.AntecedenteServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +16,16 @@ import java.util.List;
 public class AntecedenteController {
 
     @Autowired
-    private AntecedenteService antecedenteService;
+    private AntecedenteServiceImp antecedenteServiceImp;
 
-    @GetMapping("/sociedad_antecedentes/{id}")
-    public ResponseEntity<List<AntecedenteDTO>> getSociedadAntecedenteById(@PathVariable("id") Integer id){
-
-        List<AntecedenteDTO> antecedentes = antecedenteService.getSociedadAntecedenteById(id);
-        if (antecedentes.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @GetMapping("/sociedad_antecedentes/{cuit}")
+    public ResponseEntity<?> getSociedadAntecedenteByCuit(@PathVariable("cuit") String cuit) {
+        List<AntecedenteDTO> antecedentes;
+        try {
+            antecedentes = antecedenteServiceImp.getSociedadAntecedenteByCuit(cuit);
+        } catch (ResourceNotFoundException r) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(r.getMessage());
         }
-        return new ResponseEntity<>(antecedentes, HttpStatus.OK);
+        return ResponseEntity.ok().body(antecedentes);
     }
-
 }
