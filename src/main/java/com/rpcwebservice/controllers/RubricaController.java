@@ -3,7 +3,8 @@ package com.rpcwebservice.controllers;
 import com.rpcwebservice.dtos.RubricaDTO;
 //import com.rpcwebservice.dtos.RubricasDT;
 //import com.rpcwebservice.entities.Rubrica;
-import com.rpcwebservice.services.RubricaService;
+import com.rpcwebservice.exceptions.ResourceNotFoundException;
+import com.rpcwebservice.services.RubricaServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,24 +26,24 @@ import java.util.List;
 public class RubricaController {
 
     @Autowired
-    private RubricaService rubricaService;
+    private RubricaServiceImp rubricaServiceImp;
     @Operation(
-            summary = "Recuperar rubrica por medio de id de sociedad",
-            description = "Obtener un objeto rubrica por medio del id de una sociedad. La respuesta es un objeto Rubrica con numero apertura, numero clausura, ru denominacion,id de sociedad y fecha apertura",
+            summary = "Recuperar rubrica por medio del cuit de sociedad",
+            description = "Obtener un objeto rubrica por medio del cuit de una sociedad. La respuesta es un objeto Rubrica con numero apertura, numero clausura, ru denominacion,id de sociedad y fecha apertura",
             tags = { "Rubrica"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = RubricaDTO.class), mediaType = "application/json") }),
-            @ApiResponse(responseCode = "404", description = "No se encontro una sociedad con el id ingresado",content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "404", description = "No se encontro una sociedad con el cuit ingresado",content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor",content = { @Content(schema = @Schema()) })
     })
-    @GetMapping("/sociedad_rubricas/{id}")
-    public ResponseEntity<List<RubricaDTO>> getRubricasConSociedad(@PathVariable("id") Integer id){
-        List<RubricaDTO> rubricasDTOS = rubricaService.getSociedadRubricasById(id);
-
-        if (rubricasDTOS.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping("/sociedad_rubricas/{cuit}")
+    public ResponseEntity<?> getRubricasConSociedad(@PathVariable("cuit") String cuit){
+        List<RubricaDTO> rubricas;
+        try {
+            rubricas = rubricaServiceImp.getSociedadRubricasByCuit(cuit);
+        } catch (ResourceNotFoundException r) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(r.getMessage());
         }
-
-        return new ResponseEntity<>(rubricasDTOS, HttpStatus.OK);
+        return ResponseEntity.ok().body(rubricas);
     }
 }
