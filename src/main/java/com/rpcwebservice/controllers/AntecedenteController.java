@@ -3,7 +3,7 @@ package com.rpcwebservice.controllers;
 import com.rpcwebservice.dtos.AntecedenteDTO;
 import com.rpcwebservice.dtos.RubricaDTO;
 import com.rpcwebservice.exceptions.ResourceNotFoundException;
-import com.rpcwebservice.services.AntecedenteServiceImp;
+import com.rpcwebservice.services.AntecedenteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @Tag(name = "Antecedente", description = "Web Service de Gestion de Antecedentes")
 @RequestMapping("/api")
 public class AntecedenteController {
 
     @Autowired
-    private AntecedenteServiceImp antecedenteServiceImp;
+    private AntecedenteService antecedenteService;
 
     @Operation(
             summary = "Recuperar antecedente por medio del cuit de sociedad",
@@ -39,7 +39,7 @@ public class AntecedenteController {
     public ResponseEntity<?> getSociedadAntecedenteByCuit(@PathVariable("cuit") String cuit) {
         List<AntecedenteDTO> antecedentes;
         try {
-            antecedentes = antecedenteServiceImp.getSociedadAntecedenteByCuit(cuit);
+            antecedentes = antecedenteService.getSociedadAntecedenteByCuit(cuit);
         } catch (ResourceNotFoundException r) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(r.getMessage());
         }

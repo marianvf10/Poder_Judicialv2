@@ -4,7 +4,7 @@ import com.rpcwebservice.dtos.RubricaDTO;
 //import com.rpcwebservice.dtos.RubricasDT;
 //import com.rpcwebservice.entities.Rubrica;
 import com.rpcwebservice.exceptions.ResourceNotFoundException;
-import com.rpcwebservice.services.RubricaServiceImp;
+import com.rpcwebservice.services.RubricaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8080")
 @Tag(name = "Rubrica", description = "Web Service de Gestion de Rubricas")
 @RestController
 @RequestMapping("/api")
 public class RubricaController {
 
     @Autowired
-    private RubricaServiceImp rubricaServiceImp;
+    private RubricaService rubricaService;
     @Operation(
             summary = "Recuperar rubrica por medio del cuit de sociedad",
             description = "Obtener un objeto rubrica por medio del cuit de una sociedad. La respuesta es un objeto Rubrica con numero apertura, numero clausura, ru denominacion,id de sociedad y fecha apertura",
@@ -40,7 +40,7 @@ public class RubricaController {
     public ResponseEntity<?> getRubricasConSociedad(@PathVariable("cuit") String cuit){
         List<RubricaDTO> rubricas;
         try {
-            rubricas = rubricaServiceImp.getSociedadRubricasByCuit(cuit);
+            rubricas = rubricaService.getSociedadRubricasByCuit(cuit);
         } catch (ResourceNotFoundException r) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(r.getMessage());
         }
