@@ -59,6 +59,7 @@ public class RubricaController {
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(r.getMessage());
         }
+
         return ResponseEntity.ok().body(rubricas);
     }
 
