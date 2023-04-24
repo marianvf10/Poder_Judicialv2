@@ -20,17 +20,9 @@ import java.util.List;
 @RequestMapping("/api")
 public class SocioController {
 
+    /*
     @Autowired
     private SociosService sociosService;
-    @Operation(
-            summary = "Recuperar socio por medio del cuit de sociedad",
-            description = "Obtener un objeto socio por medio del cuit de una sociedad. La respuesta es un objeto Socio con nombre,apellido,sexo,numero_documento,denominacion,participacion,idsociedad y deno",
-            tags = { "Socio"})
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = SocioDTO.class), mediaType = "application/json") }),
-            @ApiResponse(responseCode = "404", description = "No se encontro una sociedad con el cuit provisto",content = { @Content(schema = @Schema()) }),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor",content = { @Content(schema = @Schema()) })
-    })
     @GetMapping("/sociedad_socios/{cuit}")
     public ResponseEntity<?> getSocioBySociedadCuit(@PathVariable("cuit")String cuit){
         List<SocioDTO> socios;
@@ -40,7 +32,7 @@ public class SocioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(r.getMessage());
         }
         return ResponseEntity.ok().body(socios);
-
     }
+    */
 
 }
