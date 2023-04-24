@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "sede_social")
+@Table(name = "tipos_sociedad")
 public class TipoSociedad {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
