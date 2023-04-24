@@ -46,26 +46,4 @@ public class RubricaController {
         }
         return ResponseEntity.ok().body(rubricas);
     }
-
-    /*Endpoint para obtener datos de rubricas mediante una peticion POST*/
-    @PostMapping("/sociedad_rubricas2")
-    public ResponseEntity<?> getRubricasConSociedad2(@RequestBody String cuit){
-        List<RubricaDTO> rubricas;
-        String cuitFinal = extraerCuit(cuit);
-        try {
-            rubricas = rubricaService.getSociedadRubricasByCuit(cuitFinal);
-            System.out.print(cuitFinal);
-        } catch (ResourceNotFoundException r) {
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(r.getMessage());
-        }
-
-        return ResponseEntity.ok().body(rubricas);
-    }
-
-    public String extraerCuit(String cuitSinFormato) {
-        /*utilizo este modulo debido a que el formato del body es "cuit" : "numCuit".
-        * Entonces con el subtring me quedo solo con el numCuit (sin las comillas)*/
-        return cuitSinFormato.substring(10,21);
-    }
 }
