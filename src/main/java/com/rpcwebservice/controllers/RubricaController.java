@@ -5,6 +5,7 @@ import com.rpcwebservice.dtos.RubricaDTO;
 //import com.rpcwebservice.entities.Rubrica;
 import com.rpcwebservice.exceptions.ResourceNotFoundException;
 import com.rpcwebservice.services.RubricaService;
+import com.rpcwebservice.utils.Validador;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,17 +34,25 @@ public class RubricaController {
             tags = { "Rubrica"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = RubricaDTO.class), mediaType = "application/json") }),
-            @ApiResponse(responseCode = "404", description = "No se encontro una sociedad con el cuit ingresado",content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "400", description = "No se encontro una sociedad con el cuit ingresado",content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "404", description = "El cuit ingresado no es valido",content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor",content = { @Content(schema = @Schema()) })
     })
     @GetMapping("/sociedad_rubricas/{cuit}")
     public ResponseEntity<?> getRubricasConSociedad(@PathVariable("cuit") String cuit){
         List<RubricaDTO> rubricas;
-        try {
-            rubricas = rubricaService.getSociedadRubricasByCuit(cuit);
-        } catch (ResourceNotFoundException r) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(r.getMessage());
+
+        String cuitFormateado = Validador.validarCuit(cuit);
+        if (!cuitFormateado.isEmpty()){
+            try {
+                rubricas = rubricaService.getSociedadRubricasByCuit(cuitFormateado);
+            } catch (ResourceNotFoundException r) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(r.getMessage());
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El cuit ingresado es invalido");
         }
+
         return ResponseEntity.ok().body(rubricas);
     }
 }
