@@ -3,6 +3,7 @@ package com.rpcwebservice.controllers;
 import com.rpcwebservice.dtos.SocioDTO;
 import com.rpcwebservice.exceptions.ResourceNotFoundException;
 import com.rpcwebservice.services.SociosService;
+import com.rpcwebservice.utils.Validador;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -30,17 +31,24 @@ public class SocioController {
             tags = { "Socio"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = SocioDTO.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", description = "El cuit ingresado no es valido",content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "404", description = "No se encontro una sociedad con el cuit ingresado",content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor",content = { @Content(schema = @Schema()) })
     })
     @GetMapping("/sociedad_socios/{cuit}")
     public ResponseEntity<?> getSocioBySociedadCuit(@PathVariable("cuit")String cuit){
         List<SocioDTO> socios;
-        try {
-            socios = sociosService.getSociosByCuitSociedad(cuit);
-        } catch (ResourceNotFoundException r) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(r.getMessage());
+        String cuitFormateado = Validador.validarCuit(cuit);
+        if (!cuitFormateado.isEmpty()){
+            try {
+                socios = sociosService.getSociosByCuitSociedad(cuitFormateado);
+            } catch (ResourceNotFoundException r) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(r.getMessage());
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El cuit ingresado es invalido");
         }
+
         return ResponseEntity.ok().body(socios);
     }
 
