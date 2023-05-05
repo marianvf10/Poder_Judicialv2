@@ -1,36 +1,31 @@
 package com.rpcwebservice.controllers;
 
-import com.rpcwebservice.entities.Inscripcion;
-import com.rpcwebservice.repositories.InscripcionRepository;
+import com.rpcwebservice.dtos.InscripcionySedeDTO;
+import com.rpcwebservice.exceptions.ResourceNotFoundException;
+import com.rpcwebservice.services.InscripcionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api")
 public class InscripcionController {
 
     @Autowired
-    private InscripcionRepository inscripcionRepository;
-    @GetMapping("/inscripciones")
-    public ResponseEntity<List<Inscripcion>> getAllInscripciones(){
-        List<Inscripcion> inscripciones = new ArrayList<Inscripcion>();
+    private InscripcionService inscripcionService;
 
-        inscripcionRepository.findAll().forEach(inscripciones::add);
+    @GetMapping("/sociedad_inscripcion_sedesocial/{cuit}")
+    public ResponseEntity<?> getInscripcionSedeSocialByCuitSociedad(@PathVariable("cuit") String cuit) {
 
-        if (inscripciones.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        InscripcionySedeDTO inscripcionySedeDTO;
+
+        try {
+            inscripcionySedeDTO = inscripcionService.getInscripcionySedeBySociedadCuit(cuit);
+        } catch (ResourceNotFoundException r) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(r.getMessage());
         }
-
-        return new ResponseEntity<>(inscripciones, HttpStatus.OK);
+        return ResponseEntity.ok().body(inscripcionySedeDTO);
     }
-
 }
