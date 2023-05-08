@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:8080")
 @Tag(name = "Rubrica", description = "Web Service de Gestion de Rubricas")
 @RestController
 @RequestMapping("/api")
