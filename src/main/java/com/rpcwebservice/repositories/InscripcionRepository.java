@@ -1,11 +1,11 @@
 package com.rpcwebservice.repositories;
 
+import com.rpcwebservice.dtos.InscripcionySedeDTO;
 import com.rpcwebservice.entities.Inscripcion;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 
 public interface InscripcionRepository extends JpaRepository<Inscripcion,Integer> {
-    Inscripcion findFirstByExpedienteSociedadCuitOrderByFechaAsc(String cuit);
+    InscripcionySedeDTO findFirstByExpedienteSociedadCuitOrderByFechaAsc(String cuit);
 
 }
