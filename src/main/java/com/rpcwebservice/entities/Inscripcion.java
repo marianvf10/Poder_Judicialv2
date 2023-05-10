@@ -35,22 +35,22 @@ public class Inscripcion {
     @Getter
     @Setter
     @Column(name = "folio_desde")
-    private Integer folio_desde;
+    private Integer folioDesde;
 
     @Getter
     @Setter
     @Column(name = "folio_hasta")
-    private Integer folio_hasta;
+    private Integer folioHasta;
 
     @Getter
     @Setter
     @Column(name = "tomo_numero")
-    private String tomo_numero;
+    private String tomoNumero;
 
     @Getter
     @Setter
     @Column(name = "tomo_anio")
-    private String tomo_anio;
+    private String tomoAnio;
 
     @Getter
     @Setter

@@ -69,7 +69,7 @@ public class Sociedad {
     @Getter
     @Setter
     @Column(name="fecha_instrumento")
-    private Date fecha_instrumento;
+    private Date fechaInstrumento;
 
     @Getter
     @Setter
