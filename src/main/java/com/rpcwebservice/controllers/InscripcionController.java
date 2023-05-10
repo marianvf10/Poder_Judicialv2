@@ -14,7 +14,6 @@ public class InscripcionController {
 
     @Autowired
     private InscripcionService inscripcionService;
-
     @GetMapping("/sociedad_inscripcion_sedesocial/{cuit}")
     public ResponseEntity<?> getInscripcionSedeSocialByCuitSociedad(@PathVariable("cuit") String cuit) {
 
