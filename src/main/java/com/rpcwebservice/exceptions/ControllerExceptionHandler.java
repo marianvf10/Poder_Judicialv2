@@ -23,6 +23,18 @@ public class ControllerExceptionHandler {
         return message;
     }
 
+    @ExceptionHandler(FormatoCuitInvalido.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorMessage formatoCuitInvalido(FormatoCuitInvalido formatoCuitInvalido, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.BAD_REQUEST.value(),
+                new Date(),
+                formatoCuitInvalido.getMessage(),
+                request.getDescription(false));
+
+        return message;
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorMessage globalExceptionHandler(Exception ex, WebRequest request) {
