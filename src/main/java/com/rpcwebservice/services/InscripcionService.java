@@ -21,10 +21,6 @@ public class InscripcionService {
 
     @Transactional
     public InscripcionySedeDTO getInscripcionySedeBySociedadCuit(String cuit){
-        InscripcionySedeDTO inscripcionySedeDTO = inscripcionRepository.findFirstByExpedienteSociedadCuitOrderByFechaAsc(cuit);
-        if (inscripcionySedeDTO == null) {
-            throw new ResourceNotFoundException("No se encontro sociedad con el cuit provisto");
-        }
-        return inscripcionySedeDTO;
+        return inscripcionRepository.findFirstByExpedienteSociedadCuitOrderByFechaAsc(cuit);
     }
 }

@@ -3,6 +3,7 @@ package com.rpcwebservice.controllers;
 import com.rpcwebservice.dtos.InscripcionySedeDTO;
 import com.rpcwebservice.exceptions.ResourceNotFoundException;
 import com.rpcwebservice.services.InscripcionService;
+import com.rpcwebservice.utils.Validador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,15 +16,16 @@ public class InscripcionController {
     @Autowired
     private InscripcionService inscripcionService;
     @GetMapping("/sociedad_inscripcion_sedesocial/{cuit}")
-    public ResponseEntity<?> getInscripcionSedeSocialByCuitSociedad(@PathVariable("cuit") String cuit) {
+    public ResponseEntity<InscripcionySedeDTO> getInscripcionSedeSocialByCuitSociedad(@PathVariable("cuit") String cuit) {
 
         InscripcionySedeDTO inscripcionySedeDTO;
+        String cuitFormateado = Validador.validarCuit(cuit);
 
-        try {
-            inscripcionySedeDTO = inscripcionService.getInscripcionySedeBySociedadCuit(cuit);
-        } catch (ResourceNotFoundException r) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(r.getMessage());
+        inscripcionySedeDTO = inscripcionService.getInscripcionySedeBySociedadCuit(cuitFormateado);
+        if (inscripcionySedeDTO == null) {
+            throw new ResourceNotFoundException("No se encontro sociedad con el cuit ingresado");
         }
-        return ResponseEntity.ok().body(inscripcionySedeDTO);
+        return new ResponseEntity<>(inscripcionySedeDTO,HttpStatus.OK);
+
     }
 }
