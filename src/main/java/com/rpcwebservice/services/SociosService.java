@@ -16,10 +16,6 @@ public class SociosService {
     private SocioRepository socioRepository;
     @Transactional
     public List<SocioDTO> getSociosByCuitSociedad(String cuit){
-        List<SocioDTO> socios = socioRepository.getSociosBySociedadCuitAndActivo(cuit,true);
-        if (socios.isEmpty()){
-            throw new ResourceNotFoundException("No se encontro socio asociado al cuit provisto");
-        }
-        return socios;
+        return socioRepository.getSociosBySociedadCuitAndActivo(cuit,true);
     }
 }

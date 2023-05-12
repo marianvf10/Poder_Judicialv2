@@ -38,17 +38,12 @@ public class SocioController {
     public ResponseEntity<?> getSocioBySociedadCuit(@PathVariable("cuit")String cuit){
         List<SocioDTO> socios;
         String cuitFormateado = Validador.validarCuit(cuit);
-        if (!cuitFormateado.isEmpty()){
-            try {
-                socios = sociosService.getSociosByCuitSociedad(cuitFormateado);
-            } catch (ResourceNotFoundException r) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(r.getMessage());
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El cuit ingresado es invalido");
-        }
 
-        return ResponseEntity.ok().body(socios);
+        socios = sociosService.getSociosByCuitSociedad(cuitFormateado);
+        if (socios.isEmpty()) {
+            throw new ResourceNotFoundException("No se encontro sociedad con el cuit ingresado");
+        }
+        return new ResponseEntity<>(socios,HttpStatus.OK);
     }
 
 }
