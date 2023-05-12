@@ -1,5 +1,7 @@
 package com.rpcwebservice.utils;
 
+import com.rpcwebservice.exceptions.FormatoCuitInvalido;
+
 public class Validador {
 
     public static String validarCuit(String cuit) {
@@ -9,7 +11,7 @@ public class Validador {
         cuitFormateado = borrarEspacios(cuitFormateado);
         cuitFormateado = cuitFormateado.trim();
         if (cuitFormateado.length() != 11) {
-            cuitFormateado = "";
+            throw new FormatoCuitInvalido("Formato de Cuit Invalido");
         }
         return cuitFormateado;
     }
