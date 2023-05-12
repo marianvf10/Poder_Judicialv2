@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Tag(name = "Rubrica", description = "Web Service de Gestion de Rubricas")
@@ -30,28 +29,24 @@ public class RubricaController {
     @Operation(
             summary = "Recuperar rubrica por medio del cuit de sociedad",
             description = "Obtener un objeto rubrica por medio del cuit de una sociedad. La respuesta es un objeto Rubrica con numero apertura, numero clausura, ru denominacion,id de sociedad y fecha apertura",
-            tags = { "Rubrica"})
+            tags = {"Rubrica"})
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = RubricaDTO.class), mediaType = "application/json") }),
-            @ApiResponse(responseCode = "400", description = "No se encontro una sociedad con el cuit ingresado",content = { @Content(schema = @Schema()) }),
-            @ApiResponse(responseCode = "404", description = "El cuit ingresado no es valido",content = { @Content(schema = @Schema()) }),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor",content = { @Content(schema = @Schema()) })
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = RubricaDTO.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", description = "No se encontro una sociedad con el cuit ingresado", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "404", description = "El cuit ingresado no es valido", content = {@Content(schema = @Schema())}),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = {@Content(schema = @Schema())})
     })
     @GetMapping("/sociedad_rubricas/{cuit}")
-    public ResponseEntity<?> getRubricasConSociedad(@PathVariable("cuit") String cuit){
+    public ResponseEntity<List<RubricaDTO>> getRubricasConSociedad(@PathVariable("cuit") String cuit) {
         List<RubricaDTO> rubricas;
 
         String cuitFormateado = Validador.validarCuit(cuit);
-        if (!cuitFormateado.isEmpty()){
-            try {
-                rubricas = rubricaService.getSociedadRubricasByCuit(cuitFormateado);
-            } catch (ResourceNotFoundException r) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(r.getMessage());
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El cuit ingresado es invalido");
+        rubricas = rubricaService.getSociedadRubricasByCuit(cuitFormateado);
+        if (rubricas.isEmpty()) {
+            throw new ResourceNotFoundException("No se encontro sociedad con el cuit ingresado");
+        }
+           return new ResponseEntity<>(rubricas,HttpStatus.OK);
         }
 
-        return ResponseEntity.ok().body(rubricas);
     }
-}
+

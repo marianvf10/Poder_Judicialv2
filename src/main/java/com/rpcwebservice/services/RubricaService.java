@@ -19,11 +19,7 @@ public class RubricaService  {
 
     @Transactional
     public List<RubricaDTO> getSociedadRubricasByCuit(String cuit){
-        List<RubricaDTO> rubricas = rubricaRepository.findBySociedadCuit(cuit, Sort.by("apertura").ascending().and(Sort.by("denominacion").ascending()));
-        if (rubricas.isEmpty()){
-            throw new ResourceNotFoundException("No se encontro sociedad con el cuit provisto");
-        }
-        return rubricas;
+        return rubricaRepository.findBySociedadCuit(cuit, Sort.by("apertura").ascending().and(Sort.by("denominacion").ascending()));
 
     }
 }
