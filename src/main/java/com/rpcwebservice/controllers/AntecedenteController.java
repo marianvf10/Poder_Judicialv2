@@ -1,5 +1,4 @@
 package com.rpcwebservice.controllers;
-
 import com.rpcwebservice.dtos.AntecedenteDTO;
 import com.rpcwebservice.dtos.RubricaDTO;
 import com.rpcwebservice.exceptions.ResourceNotFoundException;
@@ -37,19 +36,14 @@ public class AntecedenteController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor",content = { @Content(schema = @Schema()) })
     })
     @GetMapping("/sociedad_antecedentes/{cuit}")
-    public ResponseEntity<?> getSociedadAntecedenteByCuit(@PathVariable("cuit") String cuit) {
+    public ResponseEntity<List<AntecedenteDTO>> getSociedadAntecedenteByCuit(@PathVariable("cuit") String cuit) {
         List<AntecedenteDTO> antecedentes;
         String cuitFormateado = Validador.validarCuit(cuit);
-        if (!cuitFormateado.isEmpty()){
-            try {
-                antecedentes = antecedenteService.getSociedadAntecedenteByCuit(cuitFormateado);
-            } catch (ResourceNotFoundException r) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(r.getMessage());
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El cuit ingresado es invalido");
-        }
 
-        return ResponseEntity.ok().body(antecedentes);
+        antecedentes = antecedenteService.getSociedadAntecedenteByCuit(cuitFormateado);
+        if (antecedentes.isEmpty()) {
+            throw new ResourceNotFoundException("No se encontro sociedad con el cuit ingresado");
+        }
+        return new ResponseEntity<>(antecedentes,HttpStatus.OK);
     }
 }
