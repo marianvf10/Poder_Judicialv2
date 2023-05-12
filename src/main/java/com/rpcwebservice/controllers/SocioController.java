@@ -35,7 +35,7 @@ public class SocioController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor",content = { @Content(schema = @Schema()) })
     })
     @GetMapping("/sociedad_socios/{cuit}")
-    public ResponseEntity<?> getSocioBySociedadCuit(@PathVariable("cuit")String cuit){
+    public ResponseEntity<List<SocioDTO>> getSocioBySociedadCuit(@PathVariable("cuit")String cuit){
         List<SocioDTO> socios;
         String cuitFormateado = Validador.validarCuit(cuit);
 
