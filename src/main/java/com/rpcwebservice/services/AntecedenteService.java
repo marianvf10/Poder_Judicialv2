@@ -17,10 +17,6 @@ public class AntecedenteService {
 
     @Transactional
     public List<AntecedenteDTO> getSociedadAntecedenteByCuit(String cuit){
-        List<AntecedenteDTO> antecedentes = antecedenteRepository.findBySociedadCuitOrderByFecha(cuit);
-        if (antecedentes.isEmpty()){
-            throw new ResourceNotFoundException("No se encontro sociedad con el cuit provisto");
-        }
-        return antecedentes;
+        return antecedenteRepository.findBySociedadCuitOrderByFecha(cuit);
     }
 }
