@@ -22,8 +22,8 @@ public class InscripcionController {
     private InscripcionService inscripcionService;
     @Operation(
             summary = "Recuperar informacion de inscripcion y sede por medio del cuit de sociedad",
-            description = "Obtener un objeto inscripcion por medio del cuit de una sociedad. La respuesta es un objeto Inscripcion con fecha inscripcion,numero,folio desde" +
-                    "folio hasta,tomo numero,tomo anio,denominacion,cuit,fecha instrumento,siglas,duracion e informacion correspondiente" +
+            description = "Obtener un objeto inscripcion por medio del cuit de una sociedad. La respuesta es un objeto Inscripcion con fecha inscripcion,numero,folio desde " +
+                    "folio hasta,tomo numero,tomo anio,denominacion,cuit,fecha instrumento,siglas,duracion e informacion correspondiente " +
                     "a la sede social la cual incluye calle,numero, observaciones, localidad y provincia",
             tags = { "Inscripcion"})
     @ApiResponses({
