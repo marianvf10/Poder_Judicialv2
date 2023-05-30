@@ -1,5 +1,6 @@
 # Poder_Judicialv2
 Web Service REST
+
 Pasos para ejecutar con Docker
 1. Crear el archivo jar. Para esto abrimos la consola dentro del directorio de trabajo, luego ejecutamos el siguiente comando "./mvnw clean install
 "
