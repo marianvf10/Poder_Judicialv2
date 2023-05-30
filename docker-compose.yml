@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  mariadb:
+    image: mariadb
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MARIADB_ROOT_PASSWORD=$MARIADB_ROOT_PASSWORD
+      - MARIADB_DATABASE=$MARIADB_DATABASE
+    ports:
+      - $MARIADB_LOCAL_PORT:$MARIADB_DOCKER_PORT
+    volumes:
+      - db:/var/lib/mariadb
+
+  app:
+    depends_on:
+      - mariadb
+    build: ./rpc_registro
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url"  : "jdbc:mariadb://mariadb:$MARIADB_DOCKER_PORT/$MARIADB_DATABASE?useSSL=false",
+        "spring.datasource.username" : "$MARIADB_USER",
+        "spring.datasource.password" : "$MARIADB_ROOT_PASSWORD",
+        "spring.jpa.hibernate.ddl-auto" : "none"
+      }'
+    volumes:
+      - .m2:/root/.m2
+    stdin_open: true
+    tty: true
+
+volumes:
+  db:
